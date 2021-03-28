@@ -1,18 +1,20 @@
 {% extends "base.html" %}
-{% block title %}Последние обновления на сайте{% endblock %}
-{% block header %}Последние обновления на сайте{% endblock %}
+{% block title %}Последние обновления {% endblock %}
+
 {% block content %}
+    <div class="container">
 
-    {% for post in page %}
-    <h3>
-        Автор: {{ post.author.get_full_name }}, Дата публикации: {{ post.pub_date|date:"d M Y" }}
-    </h3>
-    <p>{{ post.text|linebreaksbr }}</p>
-    {% if not forloop.last %}<hr>{% endif %}
-    {% endfor %}
+        {% include "menu.html" with index=True %}
 
-    {% if page.has_other_pages %}
-        {% include "paginator.html" with items=page paginator=paginator %}
-    {% endif %}
+        <h1>Последние обновления на сайте</h1>
 
+        {% for post in page %}
+            {% include "post_item.html" with post=post %}
+        {% endfor %}
+
+        {% if page.has_other_pages %}
+            {% include "paginator.html" with items=page paginator=paginator %}
+        {% endif %}
+
+    </div>
 {% endblock %}
